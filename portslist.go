@@ -1,5 +1,5 @@
 
-package main
+package portscanner
 
 // port_short_list has main known TCP ports with descriptions.
 var port_short_list = map[string]string {

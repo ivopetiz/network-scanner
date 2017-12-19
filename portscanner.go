@@ -1,13 +1,10 @@
 
-package main
+package portscanner
 
 import (
-		"os"
 		"fmt"
 		"net"
-		"flag"
 		"time"
-		"sync"
 		"regexp"
 		"strings"
 		"strconv"
@@ -179,67 +176,4 @@ func PortScanner(ip IPv4, port_list []string) []string {
 		}
 	}
 	return open
-}
-
-
-func main() {
-
-	start := time.Now()
-
-	var wg sync.WaitGroup
-	var ip 				IPv4
-	var ip_list 		[]IPv4
-	var port_list 		[]string
-
-	ports 		:= flag.String("p", "80", "Port or ports to scan")
-	all 		:= flag.Bool("A", false, "Scans from port 1 to 1024")
-	flag.Parse()
-
-	if *all {
-		*ports = "1-1024"
-	}
-
-	port_list = ParsePortList(*ports)
-	
-	PrintBanner()
-
-	if len(flag.Args()) == 0 {
-		ip_list = append(ip_list, IPv4{127,0,0,1})
-	
-	} else {
-		for _, ip_str := range flag.Args() {
-			
-			if strings.Contains(ip_str, "-") {
-				ip_list = append(ip_list, ParseIPSequence(ip_str)...) 
-			} else {
-				ip = ToIPv4(ip_str)
-				if ip.IsValid() {
-					ip_list = append(ip_list, ip)
-				}
-			}
-		}
-	}
-
-	// if there's not valid IPs to scan, system will exit with error.
-	if len(ip_list) == 0 {
-		fmt.Println("No valid IP addresses")
-		os.Exit(1)
-	} 
-
-	for _, ip := range ip_list {
-		wg.Add(1)
-		go func(ip IPv4){
-			defer wg.Done()
-			result := PortScanner(ip, port_list)
-			if len(result) > 0 {
-				fmt.Println("\n>" + ip.ToString())
-				PresentResults(result)
-			}
-		}(ip)
-	}
-
-	wg.Wait()
-
-	elapsed := time.Since(start)
-	fmt.Println("\nScanned in", elapsed)
 }
