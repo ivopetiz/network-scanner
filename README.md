@@ -23,7 +23,7 @@ func main() {
 	ports := []string{"21", "22", "80"}
 
 	// ip_t is a slice of strings containing an IP address.
-	ip_t:= []string{"192.168.1.100"}
+	ip_t := []string{"192.168.1.100"}
 
 	// open_ports has the results from PortScanner.
 	open_ports := portscanner.PortScanner(ip, ports)
@@ -38,7 +38,6 @@ func main() {
 package main
 
 // imports fmt lib and portscanner lib.
-import "fmt"
 import "github.com/ivopetiz/portscanner"
 
 // Main function.
@@ -48,7 +47,7 @@ func main() {
 	ports := []string{"80"}
 
 	// IP sequence is defined by a '-' between first and last IP address .
-	var ips_sequence string = "192.168.1.1-254"
+	ips_sequence := []string{"192.168.1.1-254"}
 
 	// results returns a map with open ports for each IP address.
 	results := portscanner.IPScanner(ips_list, ports, true)
