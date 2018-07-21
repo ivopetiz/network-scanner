@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ivopetiz/portscanner.svg?branch=master)](https://travis-ci.org/ivopetiz/portscanner)
+
 # Go-Portscanner
 
 TCP Network Port Scanner written in Go, nmap style.
