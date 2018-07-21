@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ivopetiz/portscanner.svg?branch=master)](https://travis-ci.org/ivopetiz/portscanner)
+[![Build Status](https://travis-ci.com/ivopetiz/portscanner.svg?branch=master)](https://travis-ci.com/ivopetiz/portscanner)
 
 # Go-Portscanner
 
