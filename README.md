@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5cc2fb7bdfb240eabe772b8bcbcbc461)](https://app.codacy.com/app/ivopetiz/portscanner?utm_source=github.com&utm_medium=referral&utm_content=ivopetiz/portscanner&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.com/ivopetiz/portscanner.svg?branch=master)](https://travis-ci.com/ivopetiz/portscanner)
 
 # Go-Portscanner
