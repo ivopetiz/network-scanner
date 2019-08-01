@@ -188,8 +188,8 @@ func PortScanner(ip IPv4, port_list []string) []string {
 	for _, port := range port_list {
 
 		conn, err := net.DialTimeout("tcp",
-									ip.ToString()+":"+port,
-									100*time.Millisecond)
+				ip.ToString()+":"+port,
+				100*time.Millisecond)
 			
 		if err == nil {
 			conn.Close()
