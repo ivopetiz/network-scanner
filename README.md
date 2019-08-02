@@ -119,7 +119,7 @@ Checks if SSH servers are up.
 
 ## TODO
 
-  * Improve performance.
-  * Improve presentation.
-  * Read IP:Port pair from file.
-  * Tests
+- [ ] Improve performance.
+- [ ] Improve presentation.
+- [ ] Read IP:Port pair from file.
+- [ ] Tests
