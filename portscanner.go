@@ -86,15 +86,15 @@ func (ip *IPv4) PlusPlus() *IPv4 {
 // ToIPv4 converts an string to a IPv4.
 func ToIPv4(ip string) IPv4 {
 
-	var newIp IPv4
+	var newIP IPv4
 
 	ipS := strings.Split(ip, ".")
 
 	for i, v := range ipS {
-		newIp[i], _ = strconv.Atoi(v)
+		newIP[i], _ = strconv.Atoi(v)
 	}
 
-	return newIp
+	return newIP
 }
 
 // ParseIPSequence gets a sequence of IP addresses correspondent from an
