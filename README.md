@@ -64,10 +64,10 @@ func main() {
 ### Installation
 
 ```sh
- $ go install https://github.com/ivopetiz/portscanner
- $ git clone https://github.com/ivopetiz/portscanner.git portscanner
- $ cd portscanner
- $ go build cmd/portscanner/portscanner.go
+ go install https://github.com/ivopetiz/portscanner
+ git clone https://github.com/ivopetiz/portscanner.git portscanner
+ cd portscanner
+ go build cmd/portscanner/portscanner.go
 ```
 
 ## Usage examples
@@ -77,7 +77,7 @@ Different ways to use Go-Portscanner.
 ### Get help
 
 ```sh
- $ portscanner -h
+ portscanner -h
  Usage of portscanner:
    -A   Scans all ports from port 1 to 1024
    -p   Port or ports to scan (default "80")
@@ -119,7 +119,7 @@ Checks if SSH servers are up.
 
 ## TODO
 
-* Improve performance.
-* Improve presentation.
-* Read IP:Port pair from file.
-* Tests
+  * Improve performance.
+  * Improve presentation.
+  * Read IP:Port pair from file.
+  * Tests

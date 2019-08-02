@@ -37,12 +37,12 @@ func ToInt(s string) int {
 // ToString converts an IP from IPv4 type to string.
 func (ip *IPv4) ToString() string {
 
-	ip_stringed := strconv.Itoa(ip[0])
+	ipStringed := strconv.Itoa(ip[0])
 	for i := 1; i < 4; i++ {
-		str_i := strconv.Itoa(ip[i])
-		ip_stringed += "." + str_i
+		strI := strconv.Itoa(ip[i])
+		ipStringed += "." + strI
 	}
-	return ip_stringed
+	return ipStringed
 }
 
 // IsValid checks an IP address as valid or not.
@@ -86,40 +86,40 @@ func (ip *IPv4) PlusPlus() *IPv4 {
 // ToIPv4 converts an string to a IPv4.
 func ToIPv4(ip string) IPv4 {
 
-	var new_ip IPv4
+	var newIp IPv4
 
-	ip_s := strings.Split(ip, ".")
+	ipS := strings.Split(ip, ".")
 
-	for i, v := range ip_s {
-		new_ip[i], _ = strconv.Atoi(v)
+	for i, v := range ipS {
+		newIp[i], _ = strconv.Atoi(v)
 	}
 
-	return new_ip
+	return newIp
 }
 
 // ParseIPSequence gets a sequence of IP addresses correspondent from an
 // "init-end" entry.
-func ParseIPSequence(ip_sequence string) []IPv4 {
+func ParseIPSequence(ipSequence string) []IPv4 {
 
-	var array_ips []IPv4
+	var arrayIps []IPv4
 
 	series, _ := regexp.Compile("([0-9]+)")
 
 	// For sequence ips, using '-'
-	l_series := series.FindAllStringSubmatch(ip_sequence, -1)
+	lSeries := series.FindAllStringSubmatch(ipSequence, -1)
 
-	for i := ToInt(l_series[3][0]); i <= ToInt(l_series[4][0]); i++ {
-		array_ips = append(array_ips, IPv4{
-			ToInt(l_series[0][0]),
-			ToInt(l_series[1][0]),
-			ToInt(l_series[2][0]),
+	for i := ToInt(lSeries[3][0]); i <= ToInt(lSeries[4][0]); i++ {
+		arrayIps = append(arrayIps, IPv4{
+			ToInt(lSeries[0][0]),
+			ToInt(lSeries[1][0]),
+			ToInt(lSeries[2][0]),
 			i})
 	}
-	return array_ips
+	return arrayIps
 }
 
 // ParsePortList gets a port list from its port entry in arguments.
-func ParsePortList(raw_ports string) []string {
+func ParsePortList(rawPorts string) []string {
 
 	var ports []string
 
@@ -127,13 +127,13 @@ func ParsePortList(raw_ports string) []string {
 	series, _ := regexp.Compile("([0-9]+)[-]([0-9]+)")
 
 	// For individual ports, separated by ','
-	l_individuals := individuals.FindAllStringSubmatch(raw_ports, -1)
+	lIndividuals := individuals.FindAllStringSubmatch(rawPorts, -1)
 
 	// For sequence ports, using '-'
-	l_series := series.FindAllStringSubmatch(raw_ports, -1)
+	lSeries := series.FindAllStringSubmatch(rawPorts, -1)
 
-	if len(l_series) > 0 {
-		for _, s := range l_series {
+	if len(lSeries) > 0 {
+		for _, s := range lSeries {
 			init, _ := strconv.Atoi(s[1])
 			end, _ := strconv.Atoi(s[2])
 			for i := init; i < end; i++ {
@@ -141,7 +141,7 @@ func ParsePortList(raw_ports string) []string {
 			}
 		}
 	}
-	for _, port := range l_individuals {
+	for _, port := range lIndividuals {
 		ports = append(ports, port[1])
 	}
 	return ports
@@ -157,35 +157,16 @@ func PresentResults(ip IPv4, ports []string) {
 	fmt.Println(" \n>" + ip.ToString())
 	fmt.Println(" Port:	Description:")
 	for _, port := range ports {
-		fmt.Println(" " + port + "\t" + port_short_list[port])
+		fmt.Println(" " + port + "\t" + portShortList[port])
 	}
 }
 
 // PortScanner scans IP:port pairs looking for open ports on IP addresses.
-func PortScanner(ip IPv4, port_list []string) []string {
+func PortScanner(ip IPv4, portList []string) []string {
 
 	var open []string
 
-/*	var wg sync.WaitGroup
-
-	for _, port := range port_list {
-		wg.Add(1)
-		go func(port string) {
-			defer wg.Done()
-			conn, err := net.DialTimeout("tcp",
-										ip.ToString()+":"+port,
-										100*time.Millisecond)
-			
-			if err == nil {
-				conn.Close()
-				open = append(open, port)
-			}
-		}(port)
-	}
-
-	wg.Wait()
-*/
-	for _, port := range port_list {
+	for _, port := range portList {
 
 		conn, err := net.DialTimeout("tcp",
 				ip.ToString()+":"+port,
@@ -201,57 +182,45 @@ func PortScanner(ip IPv4, port_list []string) []string {
 }
 
 
-// IPScanner scans all IP addresses in ip_list for every port in port_list.
-func IPScanner(ip_str []string, port_str []string, print_results bool) map[IPv4][]string {
+// IPScanner scans all IP addresses in ipList for every port in portList.
+func IPScanner(ipstr []string, portStr []string, printResults bool) map[IPv4][]string {
 	
 	m := make(map[IPv4][]string)
 
-	var ip_list []IPv4
-	var port_list []string
+	var ipList []IPv4
+	var portList []string
 	
 	var wg sync.WaitGroup
 
-	if len(port_str) == 1 {
-		port_list = ParsePortList(port_str[0])
+	if len(portStr) == 1 {
+		portList = ParsePortList(portStr[0])
 	} else {
-		port_list = port_str
+		portList = portStr
 	}
 
-	if len(ip_str) == 0 {
-		ip_list = append(ip_list, IPv4{127, 0, 0, 1})
+	if len(ipstr) == 0 {
+		ipList = append(ipList, IPv4{127, 0, 0, 1})
 	} else {
-		for _, i := range ip_str {
+		for _, i := range ipstr {
 			if strings.Contains(i, "-") {
-				ip_list = append(ip_list, ParseIPSequence(i)...)
+				ipList = append(ipList, ParseIPSequence(i)...)
 			} else {
 				ip := ToIPv4(i)
 				if ip.IsValid() {
-					ip_list = append(ip_list, ip)
+					ipList = append(ipList, ip)
 				}
 			}
 		}
 	}
-/*
-	for _, ip := range ip_list {
-		result := PortScanner(ip, port_list)
-		if len(result) > 0 {
-			m[ip] = result
-			if print_results {
-				PresentResults(ip, result)
-			}
-		}
-	}
-*/
 
-
-	for _, ip := range ip_list {
+	for _, ip := range ipList {
 		wg.Add(1)
 		go func(ip IPv4) {
 			defer wg.Done()
-			result := PortScanner(ip, port_list)
+			result := PortScanner(ip, portList)
 			if len(result) > 0 {
 				m[ip] = result
-				if print_results {
+				if printResults {
 					PresentResults(ip, result)
 				}
 			}

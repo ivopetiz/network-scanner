@@ -19,7 +19,7 @@ func PrintBanner() {
 // main corresponds to main func of portscanner app.
 func main() {
 
-	var ports_list []string
+	var portsList []string
 	
 	start := time.Now()
 
@@ -31,13 +31,13 @@ func main() {
 		*ports = "1-1024"
 	}
 
-	ports_list = append(ports_list, *ports)
+	portsList = append(portsList, *ports)
 
 	PrintBanner()
 
 	// if there's not valid IPs to scan, system will exit with error.
 
-	_ = portscanner.IPScanner(flag.Args(), ports_list, true)
+	_ = portscanner.IPScanner(flag.Args(), portsList, true)
 
 	elapsed := time.Since(start)
 	fmt.Println("\nScanned in", elapsed)

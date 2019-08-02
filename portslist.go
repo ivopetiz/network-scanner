@@ -1,8 +1,8 @@
 
 package portscanner
 
-// port_short_list has main known TCP ports with descriptions.
-var port_short_list = map[string]string {
+// portShortList has main known TCP ports with descriptions.
+var portShortList = map[string]string {
 	"1":	"TCP Port Service Multiplexer (TCPMUX)",
 	"5":	"Remote Job Entry (RJE)",
 	"7":	"ECHO",
