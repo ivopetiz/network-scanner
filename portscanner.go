@@ -50,11 +50,11 @@ func (ip *IPv4) IsValid() bool {
 
 	for i, oct := range ip {
 		if i == 0 || i == 3 {
-			if oct < 1 || oct > 255 {
+			if oct < 1 || oct > 254 {
 				return false
 			}
 		} else {
-			if oct < 1 || oct > 255 {
+			if oct < 0 || oct > 255 {
 				return false
 			}
 		}
@@ -65,16 +65,19 @@ func (ip *IPv4) IsValid() bool {
 // PlusPlus increments an IPv4 value.
 func (ip *IPv4) PlusPlus() *IPv4 {
 
-	if ip[3] <= 254 {
+	if ip[3] < 254 {
 		ip[3] = ip[3] + 1
 	} else {
 		if ip[2] < 255 {
+			ip[3] = 1
 			ip[2] = ip[2] + 1
 		} else {
 			if ip[1] < 255 {
+				ip[2] = 1
 				ip[1] = ip[1] + 1
 			} else {
 				if ip[0] < 255 {
+					ip[1] = 1
 					ip[0] = ip[0] + 1
 				}
 			}
@@ -147,7 +150,7 @@ func ParsePortList(rawPorts string) []string {
 	return ports
 }
 
-// GetAllIPsClassC returns a slice of IPv4 with all IP addresses 
+// GetAllIPsClassC returns a slice of IPv4 with all IP addresses
 // from a Class C.
 //func GetAllIPsClassC(ip IPv4) []IPv4 {}
 
@@ -169,27 +172,26 @@ func PortScanner(ip IPv4, portList []string) []string {
 	for _, port := range portList {
 
 		conn, err := net.DialTimeout("tcp",
-				ip.ToString()+":"+port,
-				100*time.Millisecond)
-			
+			ip.ToString()+":"+port,
+			100*time.Millisecond)
+
 		if err == nil {
 			conn.Close()
 			open = append(open, port)
 		}
 	}
-	
+
 	return open
 }
 
-
 // IPScanner scans all IP addresses in ipList for every port in portList.
 func IPScanner(ipstr []string, portStr []string, printResults bool) map[IPv4][]string {
-	
+
 	m := make(map[IPv4][]string)
 
 	var ipList []IPv4
 	var portList []string
-	
+
 	var wg sync.WaitGroup
 
 	if len(portStr) == 1 {
@@ -228,6 +230,6 @@ func IPScanner(ipstr []string, portStr []string, printResults bool) map[IPv4][]s
 	}
 
 	wg.Wait()
-	
+
 	return m
 }
