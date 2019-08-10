@@ -91,6 +91,13 @@ func TestPlusPlus(t *testing.T) {
 	if ip.PlusPlus().ToString() != nextIP.ToString() {
 		t.Error("Expected 183.146.1.1, got", ip.PlusPlus().ToString())
 	}
+
+	ip = IPv4{183, 255, 255, 254}
+	nextIP = IPv4{184, 1, 1, 1}
+
+	if ip.PlusPlus().ToString() != nextIP.ToString() {
+		t.Error("Expected 183.146.1.1, got", ip.PlusPlus().ToString())
+	}
 }
 
 func TestToIPv4(t *testing.T) {

@@ -20,7 +20,7 @@ func PrintBanner() {
 func main() {
 
 	var portsList []string
-	
+
 	start := time.Now()
 
 	ports := flag.String("p", "80", "Port or ports to scan")

@@ -70,16 +70,19 @@ func (ip *IPv4) PlusPlus() *IPv4 {
 		ip[3] = ip[3] + 1
 	} else {
 		if ip[2] < 255 {
-			ip[3] = 1
 			ip[2] = ip[2] + 1
+			ip[3] = 1
 		} else {
 			if ip[1] < 255 {
-				ip[2] = 1
 				ip[1] = ip[1] + 1
+				ip[2] = 1
+				ip[3] = 1
 			} else {
 				if ip[0] < 255 {
-					ip[1] = 1
 					ip[0] = ip[0] + 1
+					ip[1] = 1
+					ip[2] = 1
+					ip[3] = 1
 				}
 			}
 		}
