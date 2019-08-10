@@ -159,3 +159,18 @@ func TestParsePortList(t *testing.T) {
 		t.Error("Expected ports 1234,1235,1236,1237,1238, got", ParsePortList(portSeq))
 	}
 }
+
+//func TestPresentResults(t *testing.T) {}
+
+func TestPortScanner(t *testing.T) {
+
+	var ip IPv4
+	var open, portList []string
+
+	ip = IPv4{127, 0, 0, 1}
+	portList = append(portList, "123456")
+
+	if !reflect.DeepEqual(PortScanner(ip, portList), open) {
+		t.Error("Expected empty list, got", PortScanner(ip, portList))
+	}
+}

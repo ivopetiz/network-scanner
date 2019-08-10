@@ -161,13 +161,14 @@ func ParsePortList(rawPorts string) []string {
 //func GetAllIPsClassC(ip IPv4) []IPv4 {}
 
 // PresentResults presents all results in console.
-func PresentResults(ip IPv4, ports []string) {
+func PresentResults(ip IPv4, ports []string) int {
 
 	fmt.Println(" \n>" + ip.ToString())
 	fmt.Println(" Port:	Description:")
 	for _, port := range ports {
 		fmt.Println(" " + port + "\t" + portShortList[port])
 	}
+	return 0
 }
 
 // PortScanner scans IP:port pairs looking for open ports on IP addresses.
