@@ -1,6 +1,7 @@
 package portscanner
 
 import (
+	"reflect"
 	"strconv"
 	"testing"
 )
@@ -87,13 +88,67 @@ func TestPlusPlus(t *testing.T) {
 	ip = IPv4{183, 145, 255, 254}
 	nextIP = IPv4{183, 146, 1, 1}
 
-	/*	if ip.PlusPlus().ToString() != nextIP.ToString() {
+	if ip.PlusPlus().ToString() != nextIP.ToString() {
 		t.Error("Expected 183.146.1.1, got", ip.PlusPlus().ToString())
-	}*/
+	}
 }
 
-//func TestIsValid(t *testing.T) {}
+func TestToIPv4(t *testing.T) {
 
-//func TestIsValid(t *testing.T) {}
+	var ipString string
+	var ip IPv4
 
-//func TestIsValid(t *testing.T) {}
+	ipString = "183.145.10.11"
+	ip = IPv4{183, 145, 10, 11}
+
+	if ToIPv4(ipString) != ip {
+		t.Error("Expected 183.145.10.11, got", ip.ToString())
+	}
+}
+
+func TestParseIPSequence(t *testing.T) {
+
+	var IPsec string
+	var listIPv4 []IPv4
+
+	IPsec = "192.168.1.1-10"
+	listIPv4 = append(listIPv4,
+		IPv4{192, 168, 1, 1},
+		IPv4{192, 168, 1, 2},
+		IPv4{192, 168, 1, 3},
+		IPv4{192, 168, 1, 4},
+		IPv4{192, 168, 1, 5},
+		IPv4{192, 168, 1, 6},
+		IPv4{192, 168, 1, 7},
+		IPv4{192, 168, 1, 8},
+		IPv4{192, 168, 1, 9},
+		IPv4{192, 168, 1, 10},
+	)
+
+	if !reflect.DeepEqual(ParseIPSequence(IPsec), listIPv4) {
+		t.Error("Expected IPs from 1 to 10, got", ParseIPSequence(IPsec))
+	}
+}
+
+func TestParsePortList(t *testing.T) {
+
+	var portSeq string
+	var ports []string
+
+	portSeq = "1234,1235,1236,1237,1238"
+	ports = append(ports, "1234",
+		"1235",
+		"1236",
+		"1237",
+		"1238")
+
+	if !reflect.DeepEqual(ParsePortList(portSeq), ports) {
+		t.Error("Expected ports 1234,1235,1236,1237,1238, got", ParsePortList(portSeq))
+	}
+
+	portSeq = "1234-1238"
+
+	if !reflect.DeepEqual(ParsePortList(portSeq), ports) {
+		t.Error("Expected ports 1234,1235,1236,1237,1238, got", ParsePortList(portSeq))
+	}
+}

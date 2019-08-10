@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -139,7 +140,7 @@ func ParsePortList(rawPorts string) []string {
 		for _, s := range lSeries {
 			init, _ := strconv.Atoi(s[1])
 			end, _ := strconv.Atoi(s[2])
-			for i := init; i < end; i++ {
+			for i := init + 1; i < end; i++ {
 				ports = append(ports, strconv.Itoa(i))
 			}
 		}
@@ -147,6 +148,8 @@ func ParsePortList(rawPorts string) []string {
 	for _, port := range lIndividuals {
 		ports = append(ports, port[1])
 	}
+	sort.Strings(ports)
+
 	return ports
 }
 
