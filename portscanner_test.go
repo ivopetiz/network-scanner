@@ -174,3 +174,25 @@ func TestPortScanner(t *testing.T) {
 		t.Error("Expected empty list, got", PortScanner(ip, portList))
 	}
 }
+
+func TestIPScanner(t *testing.T) {
+
+	var ipStr []string
+	//var ipList []IPv4
+	var portList []string
+
+	openMap := make(map[IPv4][]string)
+
+	ipStr = append(ipStr, "127.0.0.1")
+
+	portList = append(portList, "123456")
+
+	IPScanner(ipStr, portList, true)
+
+	if !reflect.DeepEqual(IPScanner(ipStr, portList, false), openMap) {
+		t.Error("Expected empty list, got",
+			IPScanner(ipStr, portList, false), openMap)
+	}
+}
+
+//ver: cold little heart
