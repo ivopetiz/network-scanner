@@ -119,8 +119,8 @@ Checks if SSH servers are up.
 
 ## TODO
 
-- [ ] Improve performance.
-- [ ] Improve presentation.
-- [ ] Read IP:Port pair from file.
-- [x] Tests
-- [ ] Docker 
+- [ ]   Improve performance.
+- [ ]   Improve presentation.
+- [ ]   Read IP:Port pair from file.
+- [x]   Tests
+- [ ]   Docker 
