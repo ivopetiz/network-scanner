@@ -160,7 +160,18 @@ func TestParsePortList(t *testing.T) {
 	}
 }
 
-//func TestPresentResults(t *testing.T) {}
+func TestPresentResults(t *testing.T) {
+
+	var ip IPv4
+	var portList []string
+
+	ip = IPv4{127, 0, 0, 1}
+	portList = append(portList, "12345")
+
+	if PresentResults(ip, portList) != 0 {
+		t.Error("Expected 0, got", PresentResults(ip, portList))
+	}
+}
 
 func TestPortScanner(t *testing.T) {
 
@@ -183,11 +194,16 @@ func TestIPScanner(t *testing.T) {
 
 	openMap := make(map[IPv4][]string)
 
+	portList = append(portList, "12345")
+
+	if !reflect.DeepEqual(IPScanner(ipStr, portList, false), openMap) {
+		t.Error("Expected empty list, got",
+			IPScanner(ipStr, portList, false), openMap)
+	}
+
 	ipStr = append(ipStr, "127.0.0.1")
 
-	portList = append(portList, "123456")
-
-	IPScanner(ipStr, portList, true)
+	portList = append(portList, "12346")
 
 	if !reflect.DeepEqual(IPScanner(ipStr, portList, false), openMap) {
 		t.Error("Expected empty list, got",

@@ -122,4 +122,5 @@ Checks if SSH servers are up.
 - [ ] Improve performance.
 - [ ] Improve presentation.
 - [ ] Read IP:Port pair from file.
-- [ ] Tests
+- [x] Tests
+- [ ] Docker 
